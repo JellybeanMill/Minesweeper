@@ -45,20 +45,22 @@ class BombButton
 		myDirective = direct;
 		exposed = false;
 		myInfo = 0;
+		getInfo();
 	}
 	public void getInfo()
 	{
 		if(myDirective == 0)
 		{
-			if(bombField[myX-1][myY-1]==1){myInfo++;}
-			if(bombField[myX][myY-1]==1){myInfo++;}
-			if(bombField[myX+1][myY-1]==1){myInfo++;}
-			if(bombField[myX-1][myY]==1){myInfo++;}
-			if(bombField[myX+1][myY]==1){myInfo++;}
-			if(bombField[myX-1][myY+1]==1){myInfo++;}
-			if(bombField[myX][myY+1]==1){myInfo++;}
-			if(bombField[myX+1][myY+1]==1){myInfo++;}
+			if((myX>0&&myY>0)&&bombField[myX-1][myY-1]==1){myInfo++;}
+			if(myY>0&&bombField[myX][myY-1]==1){myInfo++;}
+			if((myY>0&&myX<59)&&bombField[myX+1][myY-1]==1){myInfo++;}
+			if(myX>0&&bombField[myX-1][myY]==1){myInfo++;}
+			if(myX<59&&bombField[myX+1][myY]==1){myInfo++;}
+			if((myX>0&&myY<59)&&bombField[myX-1][myY+1]==1){myInfo++;}
+			if(myY<59&&bombField[myX][myY+1]==1){myInfo++;}
+			if((myX<59&&myY<59)&&bombField[myX+1][myY+1]==1){myInfo++;}
 		}
+		if(myDirective == 1){myInfo=9;}
 	}
 	public void show()
 	{
@@ -86,7 +88,17 @@ class BombButton
 		exposed=true;
 		if(myDirective==0)
 		{
-
+			if(myInfo==0)
+			{
+				if(myX>0&&myY>0){deButtons.get(myX-1+((myY-1)*60)).engage();}
+				if(myY>0){deButtons.get(myX+((myY-1)*60)).engage();}
+				if(myX<59&&myY>0){deButtons.get(myX+1+((myY-1)*60)).engage();}
+				if(myX>0){deButtons.get(myX-1+((myY)*60)).engage();}
+				if(myX<59){deButtons.get(myX+1+((myY)*60)).engage();}
+				if(myX>0&&myY<59){deButtons.get(myX-1+((myY+1)*60)).engage();}
+				if(myY<59){deButtons.get(myX+((myY+1)*60)).engage();}
+				if(myX<59&&myY<59){deButtons.get(myX+1+((myY+1)*60)).engage();}
+			}
 		}
 	}
 }
