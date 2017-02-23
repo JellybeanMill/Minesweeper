@@ -11,19 +11,30 @@ public void setup()
 			deButtons[lp2][lp1] = new BombButton(lp2,lp1,0);
 		}
 	}
-	for(int lp1=0;lp1<45;lp1++)
+	for(int lp1=0;lp1<90;lp1++)
 	{
 		int toBombX = (int)(Math.random()*30);
 		int toBombY = (int)(Math.random()*30);
 		if(deButtons[toBombX][toBombY].getDirective()==1){lp1--;}
 		else{deButtons[toBombX][toBombY].setDirective(1);}
 	}
+	for(int lp1=0;lp1<30;lp1++)
+	{
+		for(int lp2=0;lp2<30;lp2++)
+		{
+			deButtons[lp2][lp1].createInfo();
+		}
+	}
 }
 public void draw()
 {
-	for(int lp1=0;lp1<deButtons.size();lp1++)
+	background(0);
+	for(int lp1=0;lp1<deButtons.length;lp1++)
 	{
-		deButtons.get(lp1).show();
+		for(int lp2=0;lp2<deButtons[lp1].length;lp2++)
+		{
+			deButtons[lp2][lp1].show();
+		}
 	}
 }
 public void mouseClicked()
@@ -32,7 +43,7 @@ public void mouseClicked()
 	int locateY = (int)(mouseY/20.0);
 	if(locateX<=30)
 	{
-		deButtons.get(locateX+(locateY*30)).engage();
+		deButtons[locateX][locateY].engage();
 	}
 }
 class BombButton
@@ -46,23 +57,28 @@ class BombButton
 		myDirective = direct;
 		exposed = false;
 		myInfo = 0;
-		getInfo();
 	}
-	public void getDirective(){return myDirective;}
-	public void getInfo()
+	public int getDirective(){return myDirective;}
+	public void setDirective(int direct){myDirective=direct;}
+	public void createInfo()
 	{
 		if(myDirective == 0)
 		{
-			if((myX>0&&myY>0)&&bombField[myX-1][myY-1]==1){myInfo++;}
-			if(myY>0&&bombField[myX][myY-1]==1){myInfo++;}
-			if((myY>0&&myX<29)&&bombField[myX+1][myY-1]==1){myInfo++;}
-			if(myX>0&&bombField[myX-1][myY]==1){myInfo++;}
-			if(myX<29&&bombField[myX+1][myY]==1){myInfo++;}
-			if((myX>0&&myY<29)&&bombField[myX-1][myY+1]==1){myInfo++;}
-			if(myY<29&&bombField[myX][myY+1]==1){myInfo++;}
-			if((myX<29&&myY<29)&&bombField[myX+1][myY+1]==1){myInfo++;}
+			if(isValid(myX-1,myY-1)&&deButtons[myX-1][myY-1].getDirective()==1){myInfo++;}
+			if(isValid( myX ,myY-1)&&deButtons[ myX ][myY-1].getDirective()==1){myInfo++;}
+			if(isValid(myX+1,myY-1)&&deButtons[myX+1][myY-1].getDirective()==1){myInfo++;}
+			if(isValid(myX-1, myY )&&deButtons[myX-1][ myY ].getDirective()==1){myInfo++;}
+			if(isValid(myX+1, myY )&&deButtons[myX+1][ myY ].getDirective()==1){myInfo++;}
+			if(isValid(myX-1,myY+1)&&deButtons[myX-1][myY+1].getDirective()==1){myInfo++;}
+			if(isValid( myX ,myY+1)&&deButtons[ myX ][myY+1].getDirective()==1){myInfo++;}
+			if(isValid(myX+1,myY+1)&&deButtons[myX+1][myY+1].getDirective()==1){myInfo++;}
 		}
 		if(myDirective == 1){myInfo=9;}
+	}
+	public boolean isValid(int row, int col)
+	{
+		if(row>=0&&col>=0&&row<=29&&col<=29){return true;}
+		return false;
 	}
 	public void show()
 	{
@@ -87,21 +103,22 @@ class BombButton
 	}
 	public void engage()
 	{
+		
 		if(myDirective==0&&exposed==false)
-		{
+		{	
 			exposed=true;
 			if(myInfo==0)
 			{
 				System.out.println("Run "+amountran);
 				amountran++;
-				if(myX>0&&myY>0){deButtons.get((myX-1)+((myY-1)*30)).engage();}
-				if(myY>0){deButtons.get(myX+((myY-1)*30)).engage();}
-				if(myX<29&&myY>0){deButtons.get(myX+1+((myY-1)*30)).engage();}
-				if(myX>0){deButtons.get((myX-1)+((myY)*30)).engage();}
-				if(myX<29){deButtons.get((myX+1)+((myY)*30)).engage();}
-				if(myX>0&&myY<29){deButtons.get((myX-1)+((myY+1)*30)).engage();}
-				if(myY<29){deButtons.get(myX+((myY+1)*30)).engage();}
-				if(myX<29&&myY<29){deButtons.get((myX+1)+((myY+1)*30)).engage();}
+				if(isValid(myX-1,myY-1)){deButtons[myX-1][myY-1].engage();}
+				if(isValid( myX ,myY-1)){deButtons[ myX ][myY-1].engage();}
+				if(isValid(myX+1,myY-1)){deButtons[myX+1][myY-1].engage();}
+				if(isValid(myX-1, myY )){deButtons[myX-1][ myY ].engage();}
+				if(isValid(myX+1, myY )){deButtons[myX+1][ myY ].engage();}
+				if(isValid(myX-1,myY+1)){deButtons[myX-1][myY+1].engage();}
+				if(isValid( myX ,myY+1)){deButtons[ myX ][myY+1].engage();}
+				if(isValid(myX+1,myY+1)){deButtons[myX+1][myY+1].engage();}
 			}
 		}
 	}
