@@ -1,5 +1,6 @@
 private BombButton [][] deButtons = new BombButton[30][30];
 private int amountran = 0;
+private int sweepers = 10;
 public void setup()
 {
 	size(1000,600);
@@ -11,7 +12,7 @@ public void setup()
 			deButtons[lp2][lp1] = new BombButton(lp2,lp1,0);
 		}
 	}
-	for(int lp1=0;lp1<90;lp1++)
+	for(int lp1=0;lp1<125;lp1++)
 	{
 		int toBombX = (int)(Math.random()*30);
 		int toBombY = (int)(Math.random()*30);
@@ -36,6 +37,8 @@ public void draw()
 			deButtons[lp2][lp1].show();
 		}
 	}
+	fill(255);
+	text("Sweepers"+sweepers,650,50);
 }
 public void mouseClicked()
 {
@@ -99,26 +102,37 @@ class BombButton
 				textAlign(CENTER,CENTER);
 				if(myInfo!=0){text(myInfo,((myX)*20)+10,((myY)*20)+10);}
 			}
+			if(myDirective==1)
+			{
+				fill(225,0,0);
+				rect(((myX)*20)+10,((myY)*20)+10,20,20);
+			}
 		}
 	}
 	public void engage()
 	{
-		
-		if(myDirective==0&&exposed==false)
-		{	
+		if(exposed==false)
+		{
 			exposed=true;
-			if(myInfo==0)
+			if(myDirective==0)
 			{
-				System.out.println("Run "+amountran);
-				amountran++;
-				if(isValid(myX-1,myY-1)){deButtons[myX-1][myY-1].engage();}
-				if(isValid( myX ,myY-1)){deButtons[ myX ][myY-1].engage();}
-				if(isValid(myX+1,myY-1)){deButtons[myX+1][myY-1].engage();}
-				if(isValid(myX-1, myY )){deButtons[myX-1][ myY ].engage();}
-				if(isValid(myX+1, myY )){deButtons[myX+1][ myY ].engage();}
-				if(isValid(myX-1,myY+1)){deButtons[myX-1][myY+1].engage();}
-				if(isValid( myX ,myY+1)){deButtons[ myX ][myY+1].engage();}
-				if(isValid(myX+1,myY+1)){deButtons[myX+1][myY+1].engage();}
+				if(myInfo==0)
+				{
+					System.out.println("Run "+amountran);
+					amountran++;
+					if(isValid(myX-1,myY-1)){deButtons[myX-1][myY-1].engage();}
+					if(isValid( myX ,myY-1)){deButtons[ myX ][myY-1].engage();}
+					if(isValid(myX+1,myY-1)){deButtons[myX+1][myY-1].engage();}
+					if(isValid(myX-1, myY )){deButtons[myX-1][ myY ].engage();}
+					if(isValid(myX+1, myY )){deButtons[myX+1][ myY ].engage();}
+					if(isValid(myX-1,myY+1)){deButtons[myX-1][myY+1].engage();}
+					if(isValid( myX ,myY+1)){deButtons[ myX ][myY+1].engage();}
+					if(isValid(myX+1,myY+1)){deButtons[myX+1][myY+1].engage();}
+				}
+			}
+			else if(myDirective==1)
+			{
+				sweepers--;
 			}
 		}
 	}
