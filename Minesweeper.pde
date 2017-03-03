@@ -49,7 +49,19 @@ public void draw()
 	fill(255);
 	textAlign(LEFT, TOP);
 	if(sweepers==0&&defusers==0){gameover=true;}
-	if(gameover==false)
+	if(sweeped>=775||defused>=125)
+	{
+		textSize(40);
+		text("You Win",625,50);
+		for(int lp1=0;lp1<deButtons.length;lp1++)
+		{
+			for(int lp2=0;lp2<deButtons[lp1].length;lp2++)
+			{
+				deButtons[lp2][lp1].engage();
+			}
+		}
+	}
+	else if(gameover==false)
 	{
 		if(defusing==false)
 		{
@@ -71,6 +83,9 @@ public void draw()
 		textSize(40);
 		text("Game Over",625,50);
 	}
+	textSize(15);
+	text("Sweeped: "+sweeped+"/775",625,150);
+	text("Defused: "+defused+"/125",625,180);
 }
 public void mouseClicked()
 {
@@ -169,6 +184,8 @@ class BombButton
 	{
 		if(exposed==false)
 		{
+			if(myDirective==1){defused++;}
+			else{sweeped++;}
 			exposed=true;
 			if(defusing==false&&isDead==false)
 			{
@@ -198,7 +215,5 @@ class BombButton
 				isDead=true;
 			}
 		}
-		if(myDirective==1){defused++;}
-		else{sweeped++;}
 	}
 }
