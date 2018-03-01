@@ -7,6 +7,7 @@ private int sweeped = 0;
 private int defused = 0;
 private boolean gameover = false;
 private boolean defusing = false;
+private int difficulty = 3;
 public void setup()
 {
 	size(1000,600);
@@ -217,3 +218,21 @@ class BombButton
 		}
 	}
 }
+/*
+Bomb Button types:
+
+Sweep Spots
+0: Normal Sweep Spot (White)
+	Finds all Normal Bombs in the eight tiles around it
+2: Sensitive Sweep Spot (Blue)
+	Finds all Bombs in the four tiles directly touching it
+3:
+
+Bomb Types
+1: Normal Bomb (Red)
+	Normal Bomb, blows up.
+: Disguised Bomb (Red with Black Dot)
+	Only traceable by the 4 adjacent sweep spot.
+9: EMP bomb
+	Traceable only with Sensitive Sweep Spot. Defuses all bombs within a 3 tile radius.
+*/
