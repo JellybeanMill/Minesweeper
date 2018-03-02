@@ -224,15 +224,21 @@ Bomb Button types:
 Sweep Spots
 0: Normal Sweep Spot (White)
 	Finds all Normal Bombs in the eight tiles around it
-2: Sensitive Sweep Spot (Blue)
-	Finds all Bombs in the four tiles directly touching it
-3:
+2: Hardened Sweep Spot (Orange)
+	Can only find bombs within a 4 tile
+3: Sensitive Sweep Spot (Blue)
+	Finds all Bombs in a 3 tile radius.
+4: Live Sweeper (Pink)
+	Reveals the amount of live bombs adjacent at the time of the sweep.
+5:  (Dark Green)
 
 Bomb Types
 1: Normal Bomb (Red)
 	Normal Bomb, blows up.
-: Disguised Bomb (Red with Black Dot)
-	Only traceable by the 4 adjacent sweep spot.
-9: EMP bomb
-	Traceable only with Sensitive Sweep Spot. Defuses all bombs within a 3 tile radius.
+ : Hardened Bomb (Black Dot)
+	Only traceable by the 4 adjacent sweep spot. Immune to Sensitivee Sweep Spots.
+ : EMP bomb (Blue Dot)
+	Traceable only with Sensitive Sweep Spot. Defuses everything within a 3 tile radius. Does not use defusers, but black out tiles
+ : Trigger Bomb (Green Dot)
+ 	Trigger anything within a 2 tile radius. Untaceable by anything but seeking sweepers.
 */
